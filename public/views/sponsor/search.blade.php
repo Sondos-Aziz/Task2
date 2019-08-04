@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="ar" ng-app="myApp">
 <head>
     <meta charset="utf-8">
 
@@ -7,7 +7,8 @@
     <title>sponsor</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
 </head>
 
 <body style="direction: rtl; margin:20px; ">
@@ -85,6 +86,7 @@
         </div>
         <div class="text-center m-3">
             <input class="btn btn-danger " type="submit" value="بحث">
+
         </div>
     </form>
 
@@ -164,6 +166,8 @@
             </div>
         </fieldset>
      </div>
+      <div class="text-center m-4"><a  href="{{route('sponsor.index')}}" class="btn btn-dark p-2">رجوع</a></div>
+
   </div>
 
  </body>

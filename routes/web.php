@@ -15,14 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group(['namespace' => 'Sponsor', 'prefix' => 'spons'], function() {
-    Route::resource('/sponsor', 'sponsorController');
+//Route::group(['namespace' => 'Sponsor', 'prefix' => 'spons'], function() {
+    Route::resource('/sponsor', 'SponsorController');
 
-    Route::get('/search', 'sponsorController@search')->name('search');
-    Route::post('/search', 'sponsorController@doSearch')->name('search');
+//    Route::get('/search', 'SponsorController@search')->name('search');
+//    Route::post('/search', 'SponsorController@doSearch')->name('search');
 
-});
+//});

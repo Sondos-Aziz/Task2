@@ -28,7 +28,7 @@ class UserTableSeeder extends Seeder
             'mobile' =>'059987515',
             'email' =>'sh@gmail.com',
             'nationality' =>'فلسطينية',
-            'countryOfResidence' =>'فلسطين',
+            'countryOfResidence' =>'1',
             'identificationNum' =>'35486634',
             'definitionType' =>'هوية',
             'contactPerson' =>'محمد',
