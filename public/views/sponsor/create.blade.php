@@ -44,7 +44,7 @@
                             </div>
                             <div class="m-3">
                                 <label class="mr-4">المحافظة</label>
-                                <select class="mr-3" name="governorate" ng-model="governorate">)
+                                <select class="mr-3" name="governorate" ng-model="governorate">
                                     <option ng-repeat="item in govs"value="{{item.id}}" >{{item.name}}</option>
 
                                 </select>

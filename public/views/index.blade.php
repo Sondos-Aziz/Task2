@@ -4,7 +4,7 @@
             <br class="row">
             <br class="col-md-12">
             <div class="text-center">
-            <a href="" class="btn btn-secondary " id="search"> بحث عن الكفلاء</a></br></br>
+            <a href="#!/search" class="btn btn-secondary " id="search"> بحث عن الكفلاء</a></br></br>
             </div>
 
             <a href="#!/create" class="btn btn-info float-right">إضافة كفيل</a></br></br>
@@ -56,9 +56,8 @@
                                  <td>{{item.phone1}}</td>
 
                                 <td>
-                                    <a href=" " class="btn btn-primary btn-sm ">
+                                    <a href="#!edit/{{item.id}} " class="btn btn-primary btn-sm ">
                                         <i >تعديل</i></a>
-
 
                                     <button type="button" class="btn btn-danger btn-sm" ng-click="confirmDelete(item.id)">
                                         <i>حذف</i></button>

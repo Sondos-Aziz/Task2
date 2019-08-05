@@ -22,8 +22,9 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 //Route::group(['namespace' => 'Sponsor', 'prefix' => 'spons'], function() {
     Route::resource('/sponsor', 'SponsorController');
+//   Route::delete('/delete', 'SponsorController@destroy');
 
-//    Route::get('/search', 'SponsorController@search')->name('search');
-//    Route::post('/search', 'SponsorController@doSearch')->name('search');
+    Route::get('/search', 'SponsorController@search')->name('search');
+    Route::post('/search', 'SponsorController@doSearch')->name('search');
 
 //});

@@ -13,43 +13,39 @@
 
 <body style="direction: rtl; margin:20px; ">
 
-  <div class="container">
+  <div class="container" ng-controller="searchUserController">
     <h3 class="text-center text-danger">  بحث عن الكفلاء</h3>
 
-    <form method="post"  action="{{'search'}}" style="text-align: right;">
-        @csrf
+    <form method="post"   style="text-align: right;">
+
         <div class="container-fluid" style="text-align:right">
             <fieldset class="border" style="width: 85%;margin: auto">
                 <legend class="w-auto"> محددات البحث   </legend>
 
                 <div class="text-center">
-                    <input type="radio"   name="type" value="شخص" id="r1" />شخصي
-                    <input type="radio"  class="mr-4"   name="type" id="r2" value="مؤسسة" /> مؤسسة
+                    <input type="radio"   name="type" ng-model="type" value="شخص" id="r1" />شخصي
+                    <input type="radio"  class="mr-4"   name="type" ng-model="type" id="r2" value="مؤسسة" /> مؤسسة
                 </div>
 
                 <div  id="form1">
                     <div class="m-2">
                         <label class="mr-5 ">الاسم</label>
-                        <input class="mr-3" type="text" name="firstName" >
-                        <input class="mr-0" type="text" name="secondName" >
-                        <input class="mr-0" type="text" name="thirdName" >
-                        <input class="mr-0" type="text" name="fourthName" >
+                        <input class="mr-3" type="text" name="firstName" ng-model="firstName">
+                        <input class="mr-0" type="text" name="secondName"  ng-model="secondName">
+                        <input class="mr-0" type="text" name="thirdName" ng-model="thirdName" >
+                        <input class="mr-0" type="text" name="fourthName" ng-model="fourthName" >
                     </div>
                     <div class="row mt-3">
                         <div class="col-4">
                         <label class="mr-5">المحافظة</label>
-                        <select class="mr-3 " name="governorate">
-                            @foreach($govs as $item)
-                                <option >{{$item->name}}</option>
-                            @endforeach
+                        <select class="mr-3 " name="governorate" ng-model="governorate">
+                            <option ng-repeat="item in govs" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                         </div>
                         <div class="col-4">
                         <label class="mr-4 ">المدينة</label>
-                        <select class="mr-3" name="city">
-                            @foreach($cities as $item)
-                                <option >{{$item->name}}</option>
-                            @endforeach
+                        <select class="mr-3" name="city" ng-model="city">
+                            <option ng-repeat="item in cities" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                         </div>
                     </div >
@@ -57,35 +53,33 @@
                     <div class="row mt-3">
                         <div class="col-4">
                             <label class="mr-5">الجنسية</label>
-                            <select class="mr-4 " name="nationality">
-                                @foreach($nationalities as $item)
-                                    <option >{{$item->name}}</option>
-                                @endforeach
+                            <select class="mr-4 " name="nationality" ng-model="nationality">
+                                <option ng-repeat="item in nationalities" value="{{item.id}}">{{item.name}}</option>
+
                             </select>
                         </div>
                         <div class="col-4">
                             <label class="mr-4 ">الدولة</label>
-                            <select class="mr-3" name="countryOfResidence">
-                                @foreach($countries as $item)
-                                    <option >{{$item->name}}</option>
-                                @endforeach
+                            <select class="mr-3" name="countryOfResidence" ng-model="countryOfResidence">
+                                <option ng-repeat="item in countries" value="{{item.id}}" >{{item.name}}</option>
+
                             </select>
                         </div>
                     </div >
                     <div class=" m-3 ">
                         <label class="mr-4">مسؤول الاتصال</label>
-                        <input class=" col-9" type="text" name="contactPerson" >
+                        <input class=" col-9" type="text" name="contactPerson" ng-model="contactPerson">
                     </div>
                     <div >
                     <label class="mr-4"> رقم بطاقة التعريف </label>
-                    <input type="number" name="identificationNum"  min="0" >
+                    <input type="number" name="identificationNum" ng-model="identificationNum"  min="0" >
                     </div>
                 </div>
             </fieldset>
 
         </div>
         <div class="text-center m-3">
-            <input class="btn btn-danger " type="submit" value="بحث">
+            <input class="btn btn-danger " type="submit" ng-click="doSearch()" value="بحث">
 
         </div>
     </form>
@@ -122,43 +116,39 @@
                             </thead>
 
                             <tbody class="text-center">
-                            @foreach($allUsers as $key=>$item)
-                                <tr >
-                                    <td>{{$key + 1}}</td>
-                                    <td>{{$item->firstName ." ".$item->secondName ." ".$item->thirdName ." ".$item->fourthName}}</td>
-                                    <td>{{$item->type}}</td>
-                                    <td>{{$item->countryOfResidence}}</td>
-                                    <td>{{$item->address}}</td>
-                                    <td>{{$item->phone1}}</td>
+                            <tr  ng-repeat="(index,item) in users">
+                                <td>{{index + 1}}</td>
+                                <td>{{item.firstName }} {{item.secondName}} {{item.thirdName}} {{item.fourthName}}</td>
+                                <td>{{item.type}}</td>
 
-                                    <td>
-                                        <a href=" {{route('sponsor.edit',$item->id)}}" class="btn btn-primary btn-sm ">
-                                            <i >تعديل</i></a>
+                                <td ng-if="item.countryOfResidence == 1">فلسطين</td>
+                                <td ng-if="item.countryOfResidence == 2">مصر</td>
+                                <td ng-if="item.countryOfResidence == 3">لبنان</td>
+                                <td ng-if="item.countryOfResidence == 4">سوريا</td>
+                                <td ng-if="item.countryOfResidence == 5">الأردن</td>
 
-                                        <form id="delete-form-{{ $item->id }}" action="{{ route('sponsor.destroy',$item->id) }}"
-                                              style="display: none;" method="POST">
-                                            @csrf
-                                            @method('DELETE')
-                                        </form>
-                                        <button type="button" class="btn btn-danger btn-sm" onclick="if(confirm('Are you sure? You want to delete this?')){
-                                            event.preventDefault();
-                                            document.getElementById('delete-form-{{ $item->id }}').submit();
-                                            }else {
-                                            event.preventDefault();
-                                            }"><i>حذف</i></button>
+                                <td>{{item.address}}</td>
+                                <td>{{item.phone1}}</td>
 
-                                    </td>
+                                <td>
+                                    <a href=" " class="btn btn-primary btn-sm ">
+                                        <i >تعديل</i></a>
+
+
+                                    <button type="button" class="btn btn-danger btn-sm" ng-click="confirmDelete(item.id)">
+                                        <i>حذف</i></button>
+
+                                </td>
                                 </tr>
-                            @endforeach
                             </tbody>
                         </table>
                     <!--  links -->
                         <nav aria-label="Page navigation example">
                             <ul class="pagination ">
-                                <li class="page-item"><a class="page-link" href="{{$allUsers->url(1)}}">الأول</a></li>
-                                <li class="page-item"><a class="page-link" href="{{$allUsers->previousPageUrl()}}">السابق</a></li>
-                                <li class="page-item"><a class="page-link" href="{{ $allUsers->nextPageUrl() }}">التالي</a></li>
-                                <li class="page-item"><a class="page-link" href="{{$allUsers->url($allUsers->lastPage())}}">الأخير</a></li>
+                                <li class="page-item"><a class="page-link" href="{{users.url(1)}}">الأول</a></li>
+                                <li class="page-item"><a class="page-link" href="{{users.previousPageUrl()}}">السابق</a></li>
+                                <li class="page-item"><a class="page-link" href="{{users.nextPageUrl() }}">التالي</a></li>
+                                <li class="page-item"><a class="page-link" href="{{users.url(users.lastPage())}}">الأخير</a></li>
                             </ul>
                         </nav>
                     </div>
@@ -166,7 +156,7 @@
             </div>
         </fieldset>
      </div>
-      <div class="text-center m-4"><a  href="{{route('sponsor.index')}}" class="btn btn-dark p-2">رجوع</a></div>
+      <div class="text-center m-4"><a  href="#!/" class="btn btn-dark p-2">رجوع</a></div>
 
   </div>
 

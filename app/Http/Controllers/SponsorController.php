@@ -123,7 +123,7 @@ class SponsorController extends Controller
         }
         $user->save();
         return response()->json([
-            'users'=>$user,
+            'user'=>$user,
 
         ],200);
 //         return redirect()->route('sponsor.index')->with('successMsg','sponsor successfully saved');
@@ -137,8 +137,16 @@ class SponsorController extends Controller
         $cities = City::all();
         $nationalities = Nationality::all();
         $countries = Country::all();
-        $allUsers =DB::table('users')->Paginate(3);
-        return view('sponsor.search',['allUsers'=>$allUsers ,'govs'=>$govs ,'cities'=>$cities ,'nationalities'=>$nationalities ,'countries'=>$countries]);
+        $users =User::all();
+//        return view('sponsor.search',['allUsers'=>$allUsers ,'govs'=>$govs ,'cities'=>$cities ,'nationalities'=>$nationalities ,'countries'=>$countries]);
+        return response()->json([
+            'users'=>$users,
+            'govs'=>$govs,
+            'cities'=>$cities,
+            'nationalities'=>$nationalities,
+            'countries'=>$countries
+
+        ],200);
     }
 
     //post search
@@ -149,9 +157,9 @@ class SponsorController extends Controller
             if ($request->firseName <> null) {
                 dd('ggggggggggggggg');
                 $allUsers = DB::table('users')->where('firstName', 'LIKE', '%'.$request->firstName.'%')->get();
-            } elseif ($request->secondName <> null) {
+            } if ($request->secondName <> null) {
                 $allUsers = DB::table('users')->where('secondName', 'LIKE', "%$request->secondName%")->get();
-            } elseif ($request->thirdName <> null) {
+            } if ($request->thirdName <> null) {
                 $allUsers = DB::table('users')->where('thirdName', 'LIKE', "%$request->thirdName%")->get();
 //            }elseif ($request->fourthName <> null) {
 //                $allUsers += DB::table('users')->where('fourthName', 'LIKE', "%$request->fourthName%")->Paginate(3);
@@ -175,7 +183,20 @@ class SponsorController extends Controller
 //                ->get();
         }
 //        return view('sponsor.search',compact('allUsers'));
-        return 'gfbt0';
+
+//        $govs = Governorate::all();
+//        $cities = City::all();
+//        $nationalities = Nationality::all();
+//        $countries = Country::all();
+
+        return response()->json([
+            'users'=>$allUsers,
+//            'govs'=>$govs,
+//            'cities'=>$cities,
+//            'nationalities'=>$nationalities,
+//            'countries'=>$countries
+
+        ],200);
     }
 
     /**
@@ -199,7 +220,12 @@ class SponsorController extends Controller
     {
         $user = User::find($id);
         $countries = Country::all();
-        return view('sponsor.edit',compact('user','countries'));
+//        return view('sponsor.edit',compact('user','countries'));
+        return response()->json([
+            'user'=>$user,
+            'countries'=>$countries
+
+        ],200);
     }
 
     /**
@@ -221,8 +247,11 @@ class SponsorController extends Controller
         $user->phone1 = $request->phone1;
 
         $user->save();
-        return redirect()->route('sponsor.index')->with('successMsg','sponsor successfully saved');
+//        return redirect()->route('sponsor.index')->with('successMsg','sponsor successfully saved');
+        return response()->json([
+            'user'=>$user,
 
+        ],200);
     }
 
     /**
@@ -235,6 +264,12 @@ class SponsorController extends Controller
     {
         $user = User::find($id);
         $user->delete();
-        return redirect()->route('sponsor.index')->with('successMsg','item  deleted successfully' );
-        $user->save();    }
+        return response()->json([
+            'users'=>$user,
+
+        ],200);
+//        return redirect()->route('sponsor.index')->with('successMsg','item  deleted successfully' );
+        $user->save();
+
+    }
 }
