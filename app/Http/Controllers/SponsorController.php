@@ -138,7 +138,6 @@ class SponsorController extends Controller
         $nationalities = Nationality::all();
         $countries = Country::all();
         $users =User::all();
-//        return view('sponsor.search',['allUsers'=>$allUsers ,'govs'=>$govs ,'cities'=>$cities ,'nationalities'=>$nationalities ,'countries'=>$countries]);
         return response()->json([
             'users'=>$users,
             'govs'=>$govs,
@@ -152,35 +151,57 @@ class SponsorController extends Controller
     //post search
     public function doSearch(Request $request){
 //        $users =DB::table('users')->where('type','=',$request->type)->Paginate(3);
-        $allUsers=array();
+        $allUsers=new User();
         if($request->type =='شخص') {
-            if ($request->firseName <> null) {
-                dd('ggggggggggggggg');
-                $allUsers = DB::table('users')->where('firstName', 'LIKE', '%'.$request->firstName.'%')->get();
-            } if ($request->secondName <> null) {
-                $allUsers = DB::table('users')->where('secondName', 'LIKE', "%$request->secondName%")->get();
-            } if ($request->thirdName <> null) {
-                $allUsers = DB::table('users')->where('thirdName', 'LIKE', "%$request->thirdName%")->get();
-//            }elseif ($request->fourthName <> null) {
-//                $allUsers += DB::table('users')->where('fourthName', 'LIKE', "%$request->fourthName%")->Paginate(3);
-//            }elseif ($request->governorate <> null) {
-//                $allUsers += DB::table('users')->where('governorate', 'LIKE', "%$request->governorate%")->Paginate(3);
-//            }elseif ($request->city <> null) {
-//                $allUsers += DB::table('users')->where('city', 'LIKE', "%$request->city%")->Paginate(3);
-//            }elseif ($request->nationality <> null) {
-//                $allUsers += DB::table('users')->where('nationality', 'LIKE', "%$request->nationality%")->Paginate(3);
-//            }elseif($request->countryOfResidence <> null) {
-//                $allUsers += DB::table('users')->where('countryOfResidence', 'LIKE', "%$request->countryOfResidence%")->Paginate(3);
-//            }elseif($request->identificationNum <> null) {
-//                $allUsers += DB::table('users')->where('identificationNum', 'LIKE', "%$request->identificationNum%")->Paginate(3);
+            if ( isset($request->firseName)) {
+                $allUsers = $allUsers->where('firstName', 'LIKE', '%'.$request->firstName.'%');
+
+            } if (isset($request->secondName)) {
+                $allUsers = $allUsers->where('secondName', 'LIKE', "%$request->secondName%");
+
+            } if (isset($request->thirdName )) {
+                $allUsers = $allUsers->where('thirdName', 'LIKE', "%$request->thirdName%");
+
+            }elseif (isset($request->fourthName)) {
+                $allUsers = $allUsers->where('fourthName', 'LIKE', "%$request->fourthName%");
+
+            }elseif (isset($request->governorate)) {
+                $allUsers = $allUsers->where('governorate', 'LIKE', "%$request->governorate%");
+
+            }elseif (isset($request->city )) {
+                $allUsers = $allUsers->where('city', 'LIKE', "%$request->city%");
+
+            }elseif (isset($request->nationality )) {
+                $allUsers = $allUsers->where('nationality', 'LIKE', "%$request->nationality%");
+
+            }elseif(isset($request->countryOfResidence )) {
+                $allUsers = $allUsers->where('countryOfResidence', 'LIKE', "%$request->countryOfResidence%");
+
+            }elseif(isset($request->identificationNum)) {
+                $allUsers = $allUsers->where('identificationNum', 'LIKE', "%$request->identificationNum%");
             }
+            $users = $allUsers->get();
 
         }elseif ($request->type =='مؤسسة') {
-//            User::query()
-//                ->orWhere('countryOfResidence', 'LIKE', "%$request->countryOfResidence%")
-//                ->orWhere('identificationNum', 'LIKE', "%$request->identificationNum%")
-//                ->orWhere('contactPerson', 'LIKE', "%$request->contactPerson%")
-//                ->get();
+            if ( isset($request->firseName)) {
+                $allUsers = $allUsers->where('firstName', 'LIKE', '%'.$request->firstName.'%');
+
+            } if (isset($request->secondName)) {
+                $allUsers = $allUsers->where('secondName', 'LIKE', '%'.$request->secondName.'%');
+
+            } if (isset($request->thirdName )) {
+                $allUsers = $allUsers->where('thirdName', 'LIKE', '%'.$request->thirdName.'%');
+
+            }elseif (isset($request->fourthName)) {
+                $allUsers = $allUsers->where('fourthName', 'LIKE', "%$request->fourthName%");
+
+            }elseif (isset($request->countryOfResidence )) {
+                $allUsers = $allUsers->where('countryOfResidence', 'LIKE', "%$request->countryOfResidence%");
+
+            }elseif (isset($request->contactPerson )) {
+                $allUsers = $allUsers->where('contactPerson', 'LIKE', "%$request->contactPerson%");
+
+            }
         }
 //        return view('sponsor.search',compact('allUsers'));
 
@@ -190,7 +211,7 @@ class SponsorController extends Controller
 //        $countries = Country::all();
 
         return response()->json([
-            'users'=>$allUsers,
+            'users'=>$users,
 //            'govs'=>$govs,
 //            'cities'=>$cities,
 //            'nationalities'=>$nationalities,

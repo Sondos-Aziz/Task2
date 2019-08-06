@@ -4,7 +4,7 @@ myApp.config(function($routeProvider) {
     $routeProvider
 
         .when("/", {
-            templateUrl: "views/index.blade.php",
+            templateUrl: "views/sponsor/index.blade.php",
             controller: "infoUserController"
         })
         .when("/create",{
@@ -15,10 +15,10 @@ myApp.config(function($routeProvider) {
         templateUrl : "views/sponsor/edit.blade.php",
         controller: "editUserController"
     })
-        .when("/search",{
-        templateUrl : "views/sponsor/search.blade.php",
-        controller: "searchUserController"
-    })
+    //     .when("/search",{
+    //     templateUrl : "views/sponsor/index.blade.php",
+    //     controller: "searchUserController"
+    // })
         .otherwise({
             template: "<h1>None</h1><p>Nothing has been selected</p>"
         });
@@ -217,20 +217,17 @@ myApp.controller('searchUserController', function ($scope, $http ,$window) {
         secondName: '',
         thirdName: '',
         fourthName: '',
-        email: '',
-        password: '',
         governorate:'',
         city:'',
         neighborhood:'',
-        mobile: '',
+        // mobile: '',
         nationality:'',
         countryOfResidence:'',
-        definitionType:'',
-        phone1: '',
-        phone2: '',
-        address: '',
+        // definitionType:'',
+        // phone1: '',
+        // phone2: '',
+        // address: '',
         identificationNum: '',
-        type:'',
         contactPerson:'',
     };
     $scope.countries =[];
@@ -253,17 +250,41 @@ myApp.controller('searchUserController', function ($scope, $http ,$window) {
         if ($scope.type == 'شخص') {
             console.log('search');
             $http.post('/search', {
-                firstName: $scope.firstName,//the right direction from ng-model that is exist in view
-                secondName: $scope.secondName,
-                thirdName: $scope.thirdName,
-                fourthName: $scope.fourthName,
+                firstName: $scope.search.firstName,//the right direction from ng-model that is exist in view
+                secondName: $scope.search.secondName,
+                thirdName: $scope.search.thirdName,
+                fourthName: $scope.search.fourthName,
+                governorate: $scope.search.governorate,
+                city: $scope.search.city,
+                nationality: $scope.search.nationality,
+                countryOfResidence: $scope.search.countryOfResidence,
+                identificationNum:$scope.search.identificationNum,
+
             }).then(function success(e) {
                 $window.location ='#!/search';
             }).then(function error(e){
                 alert('ffffffffffff');
             });
+
+        }else  if ($scope.type == 'مؤسسة') {
+            console.log('search');
+            $http.post('/search', {
+                firstName: $scope.search.firstName,
+                secondName: $scope.search.secondName,
+                thirdName: $scope.search.thirdName,
+                fourthName: $scope.search.fourthName,
+                contactPerson: $scope.search.contactPerson,
+                countryOfResidence: $scope.search.countryOfResidence,
+
+            }).then(function success(e) {
+                // $window.location = '#!/search';
+
+            }).then(function error(e) {
+                alert('ffffffffffff');
+            });
+
         }
-    }
+    };
 
 
 });

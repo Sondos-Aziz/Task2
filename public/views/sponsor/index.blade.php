@@ -12,13 +12,22 @@
 </head>
 
 <body style="direction: rtl; margin:20px; ">
+<div  ng-app="myApp" id="content" ng-controller="infoUserController" >
+    <div class="container-fluid">
+        <br class="row">
+        <br class="col-md-12">
+        <div class="text-center">
+            <a href="" class="btn btn-secondary " id="searchButton"> بحث عن الكفلاء</a></br></br>
+        </div>
 
-  <div class="container" ng-controller="searchUserController">
+        <a href="#!/create" class="btn btn-info float-right">إضافة كفيل</a></br></br>
+
+<div id="search">
+  <div  ng-controller="searchUserController">
     <h3 class="text-center text-danger">  بحث عن الكفلاء</h3>
 
     <form method="post"   style="text-align: right;">
 
-        <div class="container-fluid" style="text-align:right">
             <fieldset class="border" style="width: 85%;margin: auto">
                 <legend class="w-auto"> محددات البحث   </legend>
 
@@ -27,24 +36,24 @@
                     <input type="radio"  class="mr-4"   name="type" ng-model="type" id="r2" value="مؤسسة" /> مؤسسة
                 </div>
 
-                <div  id="form1">
+                <div class="m-3" id="form1">
                     <div class="m-2">
                         <label class="mr-5 ">الاسم</label>
-                        <input class="mr-3" type="text" name="firstName" ng-model="firstName">
-                        <input class="mr-0" type="text" name="secondName"  ng-model="secondName">
-                        <input class="mr-0" type="text" name="thirdName" ng-model="thirdName" >
-                        <input class="mr-0" type="text" name="fourthName" ng-model="fourthName" >
+                        <input class="mr-3" type="text" name="firstName" ng-model="search.firstName">
+                        <input class="mr-0" type="text" name="secondName"  ng-model="search.secondName">
+                        <input class="mr-0" type="text" name="thirdName" ng-model="search.thirdName" >
+                        <input class="mr-0" type="text" name="fourthName" ng-model="search.fourthName" >
                     </div>
                     <div class="row mt-3">
                         <div class="col-4">
                         <label class="mr-5">المحافظة</label>
-                        <select class="mr-3 " name="governorate" ng-model="governorate">
+                        <select class="mr-3 " name="governorate" ng-model="search.governorate">
                             <option ng-repeat="item in govs" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                         </div>
                         <div class="col-4">
                         <label class="mr-4 ">المدينة</label>
-                        <select class="mr-3" name="city" ng-model="city">
+                        <select class="mr-3" name="city" ng-model="search.city">
                             <option ng-repeat="item in cities" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                         </div>
@@ -53,36 +62,53 @@
                     <div class="row mt-3">
                         <div class="col-4">
                             <label class="mr-5">الجنسية</label>
-                            <select class="mr-4 " name="nationality" ng-model="nationality">
+                            <select class="mr-4 " name="nationality" ng-model="search.nationality">
                                 <option ng-repeat="item in nationalities" value="{{item.id}}">{{item.name}}</option>
 
                             </select>
                         </div>
                         <div class="col-4">
                             <label class="mr-4 ">الدولة</label>
-                            <select class="mr-3" name="countryOfResidence" ng-model="countryOfResidence">
+                            <select class="mr-3" name="countryOfResidence" ng-model="search.countryOfResidence">
                                 <option ng-repeat="item in countries" value="{{item.id}}" >{{item.name}}</option>
 
                             </select>
                         </div>
                     </div >
-                    <div class=" m-3 ">
-                        <label class="mr-4">مسؤول الاتصال</label>
-                        <input class=" col-9" type="text" name="contactPerson" ng-model="contactPerson">
-                    </div>
                     <div >
                     <label class="mr-4"> رقم بطاقة التعريف </label>
-                    <input type="number" name="identificationNum" ng-model="identificationNum"  min="0" >
+                    <input type="number" name="identificationNum" ng-model="search.identificationNum"  min="0" >
                     </div>
                 </div>
+                <div class="m-3" id="form2">
+                    <div class="m-2">
+                        <label class="mr-5 ">الاسم</label>
+                        <input class="mr-3" type="text" name="firstName" ng-model="search.firstName">
+                        <input class="mr-0" type="text" name="secondName"  ng-model="search.secondName">
+                        <input class="mr-0" type="text" name="thirdName" ng-model="search.thirdName" >
+                        <input class="mr-0" type="text" name="fourthName" ng-model="search.fourthName" >
+                    </div>
+                    <div class=" m-3 ">
+                        <label class="mr-4">مسؤول الاتصال</label>
+                        <input class=" col-9" type="text" name="contactPerson" ng-model="search.contactPerson">
+                    </div>
+                    <div class="col-4">
+                        <label class="mr-4 ">الدولة</label>
+                        <select class="mr-3" name="countryOfResidence" ng-model="search.countryOfResidence">
+                            <option ng-repeat="item in countries" value="{{item.id}}" >{{item.name}}</option>
+
+                        </select>
+                    </div>
+                </div>
+
             </fieldset>
 
-        </div>
         <div class="text-center m-3">
             <input class="btn btn-danger " type="submit" ng-click="doSearch()" value="بحث">
 
         </div>
     </form>
+  </div></div>
 
      <div>
         <fieldset class="border" style="width: 85%;margin: auto">
@@ -116,10 +142,10 @@
                             </thead>
 
                             <tbody class="text-center">
-                            <tr  ng-repeat="(index,item) in users">
+                           <tr ng-repeat="(index,item) in users | filter:search">
                                 <td>{{index + 1}}</td>
                                 <td>{{item.firstName }} {{item.secondName}} {{item.thirdName}} {{item.fourthName}}</td>
-                                <td>{{item.type}}</td>
+                                <td >{{item.type}}</td>
 
                                 <td ng-if="item.countryOfResidence == 1">فلسطين</td>
                                 <td ng-if="item.countryOfResidence == 2">مصر</td>
@@ -156,10 +182,35 @@
             </div>
         </fieldset>
      </div>
-      <div class="text-center m-4"><a  href="#!/" class="btn btn-dark p-2">رجوع</a></div>
 
   </div>
+    </div></div>
+<script>
 
+    $(document).ready(function () {
+        $("#form2").hide();
+        $("#search").hide();
+
+        //hide
+        $('#r1').click(function ( ) {
+            $("#form2").hide();
+            $("#form1").show();
+
+        });
+
+        $('#r2').click(function ( ) {
+            $("#form1").hide();
+            $("#form2").show();
+
+        });
+
+        $('#searchButton').click(function ( ) {
+            $("#search").show();
+
+        });
+    });
+
+</script>
  </body>
 </html>
 
