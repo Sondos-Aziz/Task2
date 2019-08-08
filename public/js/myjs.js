@@ -27,7 +27,6 @@ myApp.config(function($routeProvider) {
 
 /////////
 myApp.controller('infoUserController', function ($scope, $http ) {
-
     $scope.users = {
         firstName: '',
         secondName: '',
@@ -59,10 +58,10 @@ myApp.controller('infoUserController', function ($scope, $http ) {
             .then(function success(e) {
                 $scope.users = e.data.users;
                 $scope.countries = e.data.countries;
-                        $scope.cities = e.data.cities;
-                        $scope.govs = e.data.govs;
-                        $scope.neighs = e.data.neighs;
-                        $scope.nationalities = e.data.nationalities;
+                $scope.cities = e.data.cities;
+                $scope.govs = e.data.govs;
+                $scope.neighs = e.data.neighs;
+                $scope.nationalities = e.data.nationalities;
             });
     };
     $scope.loadUsers();
@@ -93,28 +92,28 @@ myApp.controller('infoUserController', function ($scope, $http ) {
     };
 
     //**
-    $scope.users = {
-        firstName: '',
-        secondName: '',
-        thirdName: '',
-        fourthName: '',
-        governorate:'',
-        city:'',
-        neighborhood:'',
-        // mobile: '',
-        nationality:'',
-        countryOfResidence:'',
-        // definitionType:'',
-        // phone1: '',
-        // phone2: '',
-        // address: '',
-        identificationNum: '',
-        contactPerson:'',
-    };
+    // $scope.users = {
+    //     firstName: '',
+    //     secondName: '',
+    //     thirdName: '',
+    //     fourthName: '',
+    //     governorate:'',
+    //     city:'',
+    //     neighborhood:'',
+    //     // mobile: '',
+    //     nationality:'',
+    //     countryOfResidence:'',
+    //     // definitionType:'',
+    //     // phone1: '',
+    //     // phone2: '',
+    //     // address: '',
+    //     identificationNum: '',
+    //     contactPerson:'',
+    // };
 
     $scope.doSearch= function () {
         console.log('search');
-        $http.post('/sponsor', {
+        $http.post('/sponsor/search', {
             type: $scope.type,
             firstName: $scope.firstName,
             secondName: $scope.secondName,
@@ -135,12 +134,13 @@ myApp.controller('infoUserController', function ($scope, $http ) {
         };
 
     };
+});
 
 /////////////////
 //2. show the create form
 myApp.controller('createUserController', function ($scope, $http ,$window) {
 
-    $scope.user = {
+    $scope.users = {
         firstName: '',
         secondName: '',
         thirdName: '',
@@ -170,7 +170,7 @@ myApp.controller('createUserController', function ($scope, $http ,$window) {
     $http.get('/sponsor/create')
         .then(function success(e) {
             // console.log('get create');
-            $scope.user = e.data.users;
+            $scope.users = e.data.users;
             $scope.countries = e.data.countries;
             $scope.cities = e.data.cities;
             $scope.govs = e.data.govs;
@@ -180,7 +180,7 @@ myApp.controller('createUserController', function ($scope, $http ,$window) {
 
 // Add new User
     $scope.addSponsor = function () {
-        if ($scope.type == 'شخص') {
+        // if ($scope.type == 'شخص') {
             $http.post('/sponsor', {
                 firstName: $scope.firstName,//the right direction from ng-model that is exist in view
                 secondName: $scope.secondName,
@@ -199,28 +199,30 @@ myApp.controller('createUserController', function ($scope, $http ,$window) {
                 nationality: $scope.nationality,
                 countryOfResidence: $scope.countryOfResidence,
                 type: $scope.type,
+                contactPerson: $scope.contactPerson,
+                phone2: $scope.phone2,
             }).then(function success(e) {
                 $window.location = '#!/';
             });
 //organaization
-        } else if ($scope.type == 'مؤسسة') {
-            $http.post('/sponsor', {
-                firstName: $scope.firstName,
-                secondName: $scope.secondName,
-                thirdName: $scope.thirdName,
-                fourthName: $scope.fourthName,
-                email: $scope.email,
-                password: $scope.password,
-                phone1: $scope.phone1,
-                phone2: $scope.phone2,
-                address: $scope.address,
-                contactPerson: $scope.contactPerson,
-                type: $scope.type,
-                countryOfResidence: $scope.countryOfResidence,
-            }).then(function success(e) {
-                $window.location = '#!/';
-            });
-        }
+//         } else if ($scope.type == 'مؤسسة') {
+//             $http.post('/sponsor', {
+//                 firstName: $scope.firstName,
+//                 secondName: $scope.secondName,
+//                 thirdName: $scope.thirdName,
+//                 fourthName: $scope.fourthName,
+//                 email: $scope.email,
+//                 password: $scope.password,
+//                 phone1: $scope.phone1,
+//                 phone2: $scope.phone2,
+//                 address: $scope.address,
+//                 contactPerson: $scope.contactPerson,
+//                 type: $scope.type,
+//                 countryOfResidence: $scope.countryOfResidence,
+//             }).then(function success(e) {
+//                 $window.location = '#!/';
+//             });
+//         }
 
     };
 });
@@ -271,53 +273,6 @@ myApp.controller('createUserController', function ($scope, $http ,$window) {
         };
 
     });
-});
 
-//searchUserController
-// myApp.controller('searchUserController', function ($scope, $http ) {
-//
-//     $scope.users = {
-//         firstName: '',
-//         secondName: '',
-//         thirdName: '',
-//         fourthName: '',
-//         governorate:'',
-//         city:'',
-//         neighborhood:'',
-//         // mobile: '',
-//         nationality:'',
-//         countryOfResidence:'',
-//         // definitionType:'',
-//         // phone1: '',
-//         // phone2: '',
-//         // address: '',
-//         identificationNum: '',
-//         contactPerson:'',
-//     };
-//
-//     $scope.doSearch= function () {
-//             console.log('search');
-//             $http.post('/sponsor', {
-//                 type:$scope.type,
-//                 firstName: $scope.firstName,
-//                 secondName: $scope.secondName,
-//                 thirdName: $scope.thirdName,
-//                 fourthName: $scope.fourthName,
-//                 governorate: $scope.governorate,
-//                 city: $scope.city,
-//                 nationality: $scope.nationality,
-//                 countryOfResidence: $scope.countryOfResidence,
-//                 identificationNum:$scope.identificationNum,
-//                 contactPerson: $scope.contactPerson,
-//
-//             }).then(function success(e) {
-//                 $scope.users =e.data.users;
-//                 alert('ddddddddd');
-//             }),function error(e){
-//                 alert('error in search');
-//             };
-//
-//
-//     };
-//
-// });
+
+

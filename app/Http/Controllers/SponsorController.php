@@ -93,7 +93,7 @@ class SponsorController extends Controller
 //            'password' => ['required','string','min:6',],
 //        ]);
 
-
+//dd('create');
         $user = new User();
         if($request->type ==='شخص'){   //1/2/3/4/pass/address/phone1/country
             $user->type =$request->type;
@@ -129,8 +129,9 @@ class SponsorController extends Controller
             $user->password = $request->password;
         }
         $user->save();
+
         return response()->json([
-            'user'=>$user,
+
 
         ],200);
 //         return redirect()->route('sponsor.index')->with('successMsg','sponsor successfully saved');

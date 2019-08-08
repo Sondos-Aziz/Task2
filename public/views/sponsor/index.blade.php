@@ -1,14 +1,11 @@
 <!DOCTYPE html>
-<html lang="ar" ng-app="myApp">
+<html lang="ar" >
 <head>
     <meta charset="utf-8">
 
 
     <title>sponsor</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-route.js"></script>
+
 </head>
 
 <body style="direction: rtl; margin:20px; ">
@@ -157,7 +154,7 @@
                                 <td>{{item.phone1}}</td>
 
                                 <td>
-                                    <a href=" " class="btn btn-primary btn-sm ">
+                                    <a href="#!/edit/{{item.id}} " class="btn btn-primary btn-sm ">
                                         <i >تعديل</i></a>
 
 
@@ -168,6 +165,7 @@
                                 </tr>
                             </tbody>
                         </table>
+
                     <!--  links -->
                        <!-- <nav aria-label="Page navigation example">
                             <ul class="pagination ">
