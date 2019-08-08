@@ -28,12 +28,41 @@ myApp.config(function($routeProvider) {
 /////////
 myApp.controller('infoUserController', function ($scope, $http ) {
 
-    $scope.users = [];
+    $scope.users = {
+        firstName: '',
+        secondName: '',
+        thirdName: '',
+        fourthName: '',
+        governorate:'',
+        city:'',
+        neighborhood:'',
+        // mobile: '',
+        nationality:'',
+        countryOfResidence:'',
+        // definitionType:'',
+        // phone1: '',
+        // phone2: '',
+        // address: '',
+        identificationNum: '',
+        contactPerson:'',
+    };
+
+    $scope.countries =[];
+    $scope.cities =[];
+    $scope.govs =[];
+    $scope.neighs =[];
+    $scope.nationalities =[];
+
     // List users
     $scope.loadUsers = function () {
         $http.get('/sponsor')
             .then(function success(e) {
                 $scope.users = e.data.users;
+                $scope.countries = e.data.countries;
+                        $scope.cities = e.data.cities;
+                        $scope.govs = e.data.govs;
+                        $scope.neighs = e.data.neighs;
+                        $scope.nationalities = e.data.nationalities;
             });
     };
     $scope.loadUsers();
@@ -63,8 +92,49 @@ myApp.controller('infoUserController', function ($scope, $http ) {
         }
     };
 
+    //**
+    $scope.users = {
+        firstName: '',
+        secondName: '',
+        thirdName: '',
+        fourthName: '',
+        governorate:'',
+        city:'',
+        neighborhood:'',
+        // mobile: '',
+        nationality:'',
+        countryOfResidence:'',
+        // definitionType:'',
+        // phone1: '',
+        // phone2: '',
+        // address: '',
+        identificationNum: '',
+        contactPerson:'',
+    };
 
-});
+    $scope.doSearch= function () {
+        console.log('search');
+        $http.post('/sponsor', {
+            type: $scope.type,
+            firstName: $scope.firstName,
+            secondName: $scope.secondName,
+            thirdName: $scope.thirdName,
+            fourthName: $scope.fourthName,
+            governorate: $scope.governorate,
+            city: $scope.city,
+            nationality: $scope.nationality,
+            countryOfResidence: $scope.countryOfResidence,
+            identificationNum: $scope.identificationNum,
+            contactPerson: $scope.contactPerson,
+
+        }).then(function success(e) {
+            $scope.users = e.data.users;
+            alert('ddddddddd');
+        }), function error(e) {
+            alert('error in search');
+        };
+
+    };
 
 /////////////////
 //2. show the create form
@@ -167,27 +237,20 @@ myApp.controller('createUserController', function ($scope, $http ,$window) {
             address: '',
         };
 
-        $scope.countries=[];
+        $scope.countries = [];
 
-    $scope.edit = function (id) {
-        $http.get('/sponsor/' + $routeParams.id+'/edit')
-            .then(function success(e) {
-                $scope.user = e.data.user;
-                $scope.countries = e.data.countries;
-            });
-    }
-    $scope.edit();
+        $scope.edit = function (id) {
+            $http.get('/sponsor/' + $routeParams.id + '/edit')
+                .then(function success(e) {
+                    $scope.user = e.data.user;
+                    $scope.countries = e.data.countries;
+                });
+        }
+        $scope.edit();
 
-    $scope.update = function (id) {
-            $http.put('/sponsor/'+ $scope.user.id, {
+        $scope.update = function (id) {
+            $http.put('/sponsor/' + $scope.user.id, {
 
-                // firstName: $scope.firstName,
-                // secondName: $scope.secondName,
-                // thirdName: $scope.thirdName,
-                // fourthName: $scope.fourthName,
-                // address: $scope.address,
-                // phone1: $scope.phone1,
-                // countryOfResidence: $scope.countryOfResidence
                 firstName: $scope.user.firstName,
                 secondName: $scope.user.secondName,
                 thirdName: $scope.user.thirdName,
@@ -204,87 +267,57 @@ myApp.controller('createUserController', function ($scope, $http ,$window) {
                     console.log(response);
                     alert('Submit Error');
                 }
-                );
-            };
+            );
+        };
 
+    });
 });
 
 //searchUserController
-myApp.controller('searchUserController', function ($scope, $http ,$window) {
-
-    $scope.users = {
-        firstName: '',
-        secondName: '',
-        thirdName: '',
-        fourthName: '',
-        governorate:'',
-        city:'',
-        neighborhood:'',
-        // mobile: '',
-        nationality:'',
-        countryOfResidence:'',
-        // definitionType:'',
-        // phone1: '',
-        // phone2: '',
-        // address: '',
-        identificationNum: '',
-        contactPerson:'',
-    };
-    $scope.countries =[];
-    $scope.cities =[];
-    $scope.govs =[];
-    $scope.neighs =[];
-    $scope.nationalities =[];
-
-    $http.get('/search')
-        .then(function success(e) {
-            $scope.users = e.data.users;
-            $scope.countries = e.data.countries;
-            $scope.cities = e.data.cities;
-            $scope.govs = e.data.govs;
-            $scope.neighs = e.data.neighs;
-            $scope.nationalities = e.data.nationalities;
-        });
-
-    $scope.doSearch= function () {
-        if ($scope.type == 'شخص') {
-            console.log('search');
-            $http.post('/search', {
-                firstName: $scope.search.firstName,//the right direction from ng-model that is exist in view
-                secondName: $scope.search.secondName,
-                thirdName: $scope.search.thirdName,
-                fourthName: $scope.search.fourthName,
-                governorate: $scope.search.governorate,
-                city: $scope.search.city,
-                nationality: $scope.search.nationality,
-                countryOfResidence: $scope.search.countryOfResidence,
-                identificationNum:$scope.search.identificationNum,
-
-            }).then(function success(e) {
-                $window.location ='#!/search';
-            }).then(function error(e){
-                alert('ffffffffffff');
-            });
-
-        }else  if ($scope.type == 'مؤسسة') {
-            console.log('search');
-            $http.post('/search', {
-                firstName: $scope.search.firstName,
-                secondName: $scope.search.secondName,
-                thirdName: $scope.search.thirdName,
-                fourthName: $scope.search.fourthName,
-                contactPerson: $scope.search.contactPerson,
-                countryOfResidence: $scope.search.countryOfResidence,
-
-            }).then(function success(e) {
-                // $window.location = '#!/search';
-
-            }).then(function error(e) {
-                alert('ffffffffffff');
-            });
-
-        }
-    };
-
-
-});
+// myApp.controller('searchUserController', function ($scope, $http ) {
+//
+//     $scope.users = {
+//         firstName: '',
+//         secondName: '',
+//         thirdName: '',
+//         fourthName: '',
+//         governorate:'',
+//         city:'',
+//         neighborhood:'',
+//         // mobile: '',
+//         nationality:'',
+//         countryOfResidence:'',
+//         // definitionType:'',
+//         // phone1: '',
+//         // phone2: '',
+//         // address: '',
+//         identificationNum: '',
+//         contactPerson:'',
+//     };
+//
+//     $scope.doSearch= function () {
+//             console.log('search');
+//             $http.post('/sponsor', {
+//                 type:$scope.type,
+//                 firstName: $scope.firstName,
+//                 secondName: $scope.secondName,
+//                 thirdName: $scope.thirdName,
+//                 fourthName: $scope.fourthName,
+//                 governorate: $scope.governorate,
+//                 city: $scope.city,
+//                 nationality: $scope.nationality,
+//                 countryOfResidence: $scope.countryOfResidence,
+//                 identificationNum:$scope.identificationNum,
+//                 contactPerson: $scope.contactPerson,
+//
+//             }).then(function success(e) {
+//                 $scope.users =e.data.users;
+//                 alert('ddddddddd');
+//             }),function error(e){
+//                 alert('error in search');
+//             };
+//
+//
+//     };
+//
+// });

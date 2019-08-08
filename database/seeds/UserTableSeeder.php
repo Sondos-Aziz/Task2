@@ -24,7 +24,7 @@ class UserTableSeeder extends Seeder
             'address' =>'غزة النصر عمارة الملش3',
             'phone1' =>'2865581',
             'phone2' =>'54897',
-            'type'=> 'شخصي',
+            'type'=> 'شخص',
             'mobile' =>'059987515',
             'email' =>'sh@gmail.com',
             'nationality' =>'1',

@@ -20,10 +20,10 @@
             <a href="" class="btn btn-secondary " id="searchButton"> بحث عن الكفلاء</a></br></br>
         </div>
 
-        <a href="#!/create" class="btn btn-info float-right">إضافة كفيل</a></br></br>
+        <a href="#!/create" style="margin-right: 90px" class="btn btn-info float-right">إضافة كفيل</a></br></br>
 
 <div id="search">
-  <div  ng-controller="searchUserController">
+  <div >
     <h3 class="text-center text-danger">  بحث عن الكفلاء</h3>
 
     <form method="post"   style="text-align: right;">
@@ -39,21 +39,21 @@
                 <div class="m-3" id="form1">
                     <div class="m-2">
                         <label class="mr-5 ">الاسم</label>
-                        <input class="mr-3" type="text" name="firstName" ng-model="search.firstName">
-                        <input class="mr-0" type="text" name="secondName"  ng-model="search.secondName">
-                        <input class="mr-0" type="text" name="thirdName" ng-model="search.thirdName" >
-                        <input class="mr-0" type="text" name="fourthName" ng-model="search.fourthName" >
+                        <input class="mr-3" type="text" name="firstName" ng-model="firstName">
+                        <input class="mr-0" type="text" name="secondName"  ng-model="secondName">
+                        <input class="mr-0" type="text" name="thirdName" ng-model="thirdName" >
+                        <input class="mr-0" type="text" name="fourthName" ng-model="fourthName" >
                     </div>
                     <div class="row mt-3">
                         <div class="col-4">
                         <label class="mr-5">المحافظة</label>
-                        <select class="mr-3 " name="governorate" ng-model="search.governorate">
+                        <select class="mr-3 " name="governorate" ng-model="governorate">
                             <option ng-repeat="item in govs" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                         </div>
                         <div class="col-4">
                         <label class="mr-4 ">المدينة</label>
-                        <select class="mr-3" name="city" ng-model="search.city">
+                        <select class="mr-3" name="city" ng-model="city">
                             <option ng-repeat="item in cities" value="{{item.id}}" >{{item.name}}</option>
                         </select>
                         </div>
@@ -62,14 +62,14 @@
                     <div class="row mt-3">
                         <div class="col-4">
                             <label class="mr-5">الجنسية</label>
-                            <select class="mr-4 " name="nationality" ng-model="search.nationality">
+                            <select class="mr-4 " name="nationality" ng-model="nationality">
                                 <option ng-repeat="item in nationalities" value="{{item.id}}">{{item.name}}</option>
 
                             </select>
                         </div>
                         <div class="col-4">
                             <label class="mr-4 ">الدولة</label>
-                            <select class="mr-3" name="countryOfResidence" ng-model="search.countryOfResidence">
+                            <select class="mr-3" name="countryOfResidence" ng-model="countryOfResidence">
                                 <option ng-repeat="item in countries" value="{{item.id}}" >{{item.name}}</option>
 
                             </select>
@@ -77,24 +77,24 @@
                     </div >
                     <div >
                     <label class="mr-4"> رقم بطاقة التعريف </label>
-                    <input type="number" name="identificationNum" ng-model="search.identificationNum"  min="0" >
+                    <input type="number" name="identificationNum" ng-model="identificationNum"  min="0" >
                     </div>
                 </div>
                 <div class="m-3" id="form2">
                     <div class="m-2">
                         <label class="mr-5 ">الاسم</label>
-                        <input class="mr-3" type="text" name="firstName" ng-model="search.firstName">
-                        <input class="mr-0" type="text" name="secondName"  ng-model="search.secondName">
-                        <input class="mr-0" type="text" name="thirdName" ng-model="search.thirdName" >
-                        <input class="mr-0" type="text" name="fourthName" ng-model="search.fourthName" >
+                        <input class="mr-3" type="text" name="firstName" ng-model="firstName">
+                        <input class="mr-0" type="text" name="secondName"  ng-model="secondName">
+                        <input class="mr-0" type="text" name="thirdName" ng-model="thirdName" >
+                        <input class="mr-0" type="text" name="fourthName" ng-model="fourthName" >
                     </div>
                     <div class=" m-3 ">
                         <label class="mr-4">مسؤول الاتصال</label>
-                        <input class=" col-9" type="text" name="contactPerson" ng-model="search.contactPerson">
+                        <input class=" col-9" type="text" name="contactPerson" ng-model="contactPerson">
                     </div>
                     <div class="col-4">
                         <label class="mr-4 ">الدولة</label>
-                        <select class="mr-3" name="countryOfResidence" ng-model="search.countryOfResidence">
+                        <select class="mr-3" name="countryOfResidence" ng-model="countryOfResidence">
                             <option ng-repeat="item in countries" value="{{item.id}}" >{{item.name}}</option>
 
                         </select>
@@ -142,7 +142,7 @@
                             </thead>
 
                             <tbody class="text-center">
-                           <tr ng-repeat="(index,item) in users | filter:search">
+                           <tr ng-repeat="(index,item) in users ">
                                 <td>{{index + 1}}</td>
                                 <td>{{item.firstName }} {{item.secondName}} {{item.thirdName}} {{item.fourthName}}</td>
                                 <td >{{item.type}}</td>
@@ -169,14 +169,15 @@
                             </tbody>
                         </table>
                     <!--  links -->
-                        <nav aria-label="Page navigation example">
+                       <!-- <nav aria-label="Page navigation example">
                             <ul class="pagination ">
                                 <li class="page-item"><a class="page-link" href="{{users.url(1)}}">الأول</a></li>
                                 <li class="page-item"><a class="page-link" href="{{users.previousPageUrl()}}">السابق</a></li>
                                 <li class="page-item"><a class="page-link" href="{{users.nextPageUrl() }}">التالي</a></li>
                                 <li class="page-item"><a class="page-link" href="{{users.url(users.lastPage())}}">الأخير</a></li>
                             </ul>
-                        </nav>
+                        </nav> -->
+
                     </div>
                 </div>
             </div>
