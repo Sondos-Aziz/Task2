@@ -26,12 +26,15 @@ class SponsorController extends Controller
         $cities = City::all();
         $nationalities = Nationality::all();
         $countries = Country::all();
+        $neighs = Neighborhood::all();
+
         return response()->json([
             'users'=>$users,
             'govs'=>$govs,
             'cities'=>$cities,
             'nationalities'=>$nationalities,
-            'countries'=>$countries
+            'countries'=>$countries,
+            'neighs'=>$neighs,
 
         ],200);
     }
@@ -41,26 +44,26 @@ class SponsorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $users = User::all();
-//        $govs = Governorate::with('country')->get();
-        $govs = Governorate::all();
-        $cities = City::all();
-        $neighs = Neighborhood::all();
-        $nationalities = Nationality::all();
-        $countries = Country::all();
-
-        return response()->json([
-            'users'=>$users,
-            'govs'=>$govs,
-            'cities'=>$cities,
-            'neighs'=>$neighs,
-            'nationalities'=>$nationalities,
-            'countries'=>$countries
-
-        ],200);
-    }
+//    public function create()
+//    {
+//        $users = User::all();
+////        $govs = Governorate::with('country')->get();
+//        $govs = Governorate::all();
+//        $cities = City::all();
+//        $neighs = Neighborhood::all();
+//        $nationalities = Nationality::all();
+//        $countries = Country::all();
+//
+//        return response()->json([
+//            'users'=>$users,
+//            'govs'=>$govs,
+//            'cities'=>$cities,
+//            'neighs'=>$neighs,
+//            'nationalities'=>$nationalities,
+//            'countries'=>$countries
+//
+//        ],200);
+//    }
 
     /**
      * Store a newly created resource in storage.
@@ -210,6 +213,10 @@ class SponsorController extends Controller
             } elseif (isset($request->contactPerson)) {
                 $allUsers = $allUsers->where('contactPerson', 'LIKE', '%'.$request->contactPerson.'%')->where('type','LIKE','%'.$request->type.'%');
 
+            } else{
+                return response()->json([
+                    'msg' =>'أنت تحتاج إلى الاختيار أولا شخصي أم مؤسسة!!!'
+                ],200);
             }
 
 
